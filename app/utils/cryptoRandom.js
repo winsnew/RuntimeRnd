@@ -1,4 +1,3 @@
-// findTargetHash160-crypto.js
 const { ec: EC } = require("elliptic");
 const crypto = require("crypto");
 const RIPEMD160 = require("ripemd160");
