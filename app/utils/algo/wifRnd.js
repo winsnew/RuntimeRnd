@@ -23,7 +23,7 @@ function getRandomBase58String(length) {
 }
 
 (async () => {
-  console.log(`🎲 Random search dimulai...`);
+  console.log(`Random search start...`);
   console.log(
     `Prefix part2: "${knownPrefix}" | Panjang total part2: ${fullLength}\n`
   );
@@ -47,7 +47,7 @@ function getRandomBase58String(length) {
       });
 
       if (address.startsWith("1MVD")) {
-        console.log("\n✅ Ditemukan!");
+        console.log("\n Found!");
         console.log("WIF:", wifKey);
         console.log("Address:", address);
         break;

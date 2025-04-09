@@ -1,17 +1,16 @@
-const { startSearch } = require("../utils/cryptoRandom");
+const { startSearchCrypto } = require("../utils/algo/mathRandom");
 
 function searchHandler(req, res) {
-  const algo = req.query.algo || "crypto";
-  const useCrypto = algo === "crypto";
+  const algo = req.query.algo || "math";
   let latestStatus = {};
 
   try {
-    const result = startSearch((status) => {
+    const result = startSearchCrypto((status) => {
       latestStatus = status;
       console.log(
         `[Random attempts: ${status.attempts}, Last privKey: ${status.privKey}]`
       );
-    }, useCrypto);
+    }, algo);
 
     res.json({ message: "Key Found!", algorithm: algo, ...result });
   } catch (err) {

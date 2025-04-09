@@ -3,6 +3,6 @@ const { searchHandler } = require("../controller/rndController");
 
 const router = express.Router();
 
-router.get("/random", searchHandler);
+router.get("/", searchHandler);
 
 module.exports = router;

@@ -1,5 +1,5 @@
-function startSearchCrypto(onProgress, useCrypto = true) {
-  const { ec: EC } = require("elliptic");
+function startSearchCrypto(onProgress, algo = "math") {
+  const { ec: EC, rand } = require("elliptic");
   const crypto = require("crypto");
   const RIPEMD160 = require("ripemd160");
   const ec = new EC("secp256k1");
@@ -26,6 +26,18 @@ function startSearchCrypto(onProgress, useCrypto = true) {
     return min + rand;
   }
 
+  function getRandomPseudo(min, max) {
+    const range = max - min;
+
+    let rand = BigInt(0);
+    for (let i = 0; i < 6; i++) {
+      const part = BigInt(Math.floor(Math.random() * Number.MAX_SAFE_INTEGER));
+      rand = (rand << BigInt(53)) + part;
+    }
+
+    return min + (rand % range);
+  }
+
   function getCompressedPublicKey(privateKeyBigInt) {
     const privateKeyHex = privateKeyBigInt.toString(16).padStart(64, "0");
     const key = ec.keyFromPrivate(privateKeyHex, "hex");
@@ -36,14 +48,15 @@ function startSearchCrypto(onProgress, useCrypto = true) {
     const sha256 = crypto.createHash("sha256").update(pubKeyBuffer).digest();
     return new RIPEMD160().update(sha256).digest().toString("hex");
   }
+  let randomFn;
+  if (algo === "crypto") randomFn = getRandomBigIntCrypto;
+  else if (algo === "pseudo") randomFn = getRandomPseudo;
+  else randomFn = getRandomBigIntMath;
 
   let attempts = 0;
   while (true) {
     attempts++;
-    const privKey = useCrypto
-      ? getRandomBigIntCrypto(MIN, MAX)
-      : getRandomBigIntMath(MIN, MAX);
-
+    const privKey = randomFn(MIN, MAX);
     const pubKeyCompressed = getCompressedPublicKey(privKey);
     const hash160 = getHash160(pubKeyCompressed);
 
