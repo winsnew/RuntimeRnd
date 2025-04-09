@@ -1,7 +1,8 @@
-import express from "express";
+const express = require("express");
+const { searchHandler } = require("../controller/rndController");
 
 const router = express.Router();
 
-router.get("/search");
+router.get("/random", searchHandler);
 
-export default router;
+module.exports = router;
