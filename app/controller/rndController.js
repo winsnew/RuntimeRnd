@@ -1,21 +1,26 @@
-const { startSearchCrypto } = require("../utils/algo/mathRandom");
+const { startSearchCrypto } = require("../utils/algo/algoRand");
 
-function searchHandler(req, res) {
+async function searchHandler(req, res) {
   const algo = req.query.algo || "math";
-  let latestStatus = {};
+
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
 
   try {
-    const result = startSearchCrypto((status) => {
-      latestStatus = status;
+    const result = await startSearchCrypto((status) => {
+      res.write(`data: ${JSON.stringify(status)}\n\n`);
       console.log(
         `[Random attempts: ${status.attempts}, Last privKey: ${status.privKey}]`
       );
     }, algo);
-
-    res.json({ message: "Key Found!", algorithm: algo, ...result });
+    res.write(`data: ${JSON.stringify({ found: true, ...result })}`);
+    res.end();
   } catch (err) {
     console.error("Error:", err);
+    res.write(`data: ${JSON.stringify({ error: err.message })}\n\n`);
     res.status(500).json({ message: "Error search", error: err.message });
+    res.end();
   }
 }
 

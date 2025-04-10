@@ -4,7 +4,7 @@ const randomRoutes = require("./app/routes/searchRoutes");
 
 app.use(express.json());
 app.use("/btc/random", randomRoutes);
-app.get("/btc", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Random search api is running");
 });
 
