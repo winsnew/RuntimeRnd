@@ -1,8 +1,8 @@
-const express = require("express");
-const { searchHandler } = require("../controller/rndController");
+import express from "express";
+import searchHandler from "../controller/rndController.js";
 
 const router = express.Router();
 
 router.get("/", searchHandler);
 
-module.exports = router;
+export { router };

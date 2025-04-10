@@ -5,4 +5,4 @@ function getRandomBigIntMath(min, max) {
   return min + rand;
 }
 
-module.exports = { getRandomBigIntMath };
+export { getRandomBigIntMath };

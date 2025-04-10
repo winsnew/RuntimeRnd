@@ -10,4 +10,4 @@ function getRandomPseudo(min, max) {
   return min + (rand % range);
 }
 
-module.exports = { getRandomPseudo };
+export { getRandomPseudo };

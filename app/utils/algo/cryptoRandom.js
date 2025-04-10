@@ -1,4 +1,4 @@
-const crypto = require("crypto");
+import crypto from "crypto";
 
 function getRandomBigIntCrypto(min, max) {
   const range = max - min;
@@ -11,4 +11,4 @@ function getRandomBigIntCrypto(min, max) {
   return min + rand;
 }
 
-module.exports = { getRandomBigIntCrypto };
+export { getRandomBigIntCrypto };

@@ -1,4 +1,4 @@
-const { startSearchCrypto } = require("../utils/algo/algoRand");
+import { startSearchCrypto } from "../utils/algo/algoRand.js";
 
 async function searchHandler(req, res) {
   const algo = req.query.algo || "math";
@@ -24,4 +24,4 @@ async function searchHandler(req, res) {
   }
 }
 
-module.exports = { searchHandler };
+export default searchHandler;

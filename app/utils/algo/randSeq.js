@@ -22,15 +22,15 @@ function getRandomSeq(min, max) {
   return fullBigInt;
 }
 
-module.exports = { getRandomSeq };
+export { getRandomSeq };
 
-if (require.main === module) {
-  const min = BigInt("555861086725107089408");
-  const max = BigInt("556861086725107089408");
+// if (require.main === module) {
+//   const min = BigInt("537061086725107089408");
+//   const max = BigInt("537861086725107089408");
 
-  console.log("Contoh 10 randomSeq:");
-  for (let i = 0; i < 10; i++) {
-    const result = getRandomSeq(min, max);
-    console.log(`${i + 1}. ${result}`);
-  }
-}
+//   console.log("Contoh 10 randomSeq:");
+//   for (let i = 0; i < 10; i++) {
+//     const result = getRandomSeq(min, max);
+//     console.log(`${i + 1}. ${result}`);
+//   }
+// }

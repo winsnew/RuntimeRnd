@@ -1,9 +1,9 @@
-const express = require("express");
+import express from "express";
 const app = express();
-const randomRoutes = require("./app/routes/searchRoutes");
+import { router } from "./app/routes/searchRoutes.js";
 
 app.use(express.json());
-app.use("/btc/random", randomRoutes);
+app.use("/btc/random", router);
 app.get("/", (req, res) => {
   res.send("Random search api is running");
 });

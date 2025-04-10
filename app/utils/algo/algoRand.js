@@ -1,22 +1,23 @@
-const { ec: EC, rand } = require("elliptic");
-const crypto = require("crypto");
-const RIPEMD160 = require("ripemd160");
-const ec = new EC("secp256k1");
-const { getRandomBigIntCrypto } = require("./cryptoRandom");
-const { getRandomBigIntMath } = require("./mathRand");
-const { getRandomPseudo } = require("./pseudoRand");
-const { getRandomSeq } = require("./randSeq");
+import crypto from "crypto";
+import * as secp from "@noble/secp256k1";
+import RIPEMD160 from "ripemd160";
+import { getRandomBigIntCrypto } from "./cryptoRandom.js";
+import { getRandomBigIntMath } from "./mathRand.js";
+import { getRandomPseudo } from "./pseudoRand.js";
+import { getRandomSeq } from "./randSeq.js";
 
 function startSearchCrypto(onProgress, algo = "math") {
-  const MIN = BigInt("555861086725107089408");
-  const MAX = BigInt("556861086725107089408");
+  const MIN = BigInt("537061086725107089408");
+  const MAX = BigInt("537861086725107089408");
   const TARGET_HASH160 = "61eb8a50c86b0584bb727dd65bed8d2400d6d5aa";
-  const PREFIX = "61eb";
+  const PREFIX = "61eb8";
 
   function getCompressedPublicKey(privateKeyBigInt) {
     const privateKeyHex = privateKeyBigInt.toString(16).padStart(64, "0");
-    const key = ec.keyFromPrivate(privateKeyHex, "hex");
-    return Buffer.from(key.getPublic().encodeCompressed());
+    const keyBytes = Buffer.from(privateKeyHex, "hex");
+    const pubKeyCompressed = secp.getPublicKey(keyBytes, true);
+
+    return Buffer.from(pubKeyCompressed);
   }
 
   function getHash160(pubKeyBuffer) {
@@ -63,4 +64,4 @@ function startSearchCrypto(onProgress, algo = "math") {
   });
 }
 
-module.exports = { startSearchCrypto };
+export { startSearchCrypto };
